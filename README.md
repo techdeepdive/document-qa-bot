@@ -40,7 +40,7 @@ A Retrieval-Augmented Generation (RAG) powered chatbot that lets you upload docu
 
 ```bash
 # Clone the repository
-git clone https://github.com/reevchris100/document-qa-bot.git
+git clone https://github.com/techdeepdive/document-qa-bot.git
 cd document-qa-bot
 
 # Create and activate virtual environment
