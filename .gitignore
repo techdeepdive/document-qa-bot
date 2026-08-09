@@ -1,0 +1,27 @@
+# Virtual environment
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+
+# Environment variables
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# ChromaDB local data
+chroma_data/
+
+# Streamlit
+.streamlit/
+
+# OS
+Thumbs.db
+.DS_Store
