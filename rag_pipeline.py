@@ -1,4 +1,6 @@
 import os
+import uuid
+import chromadb
 from langchain_community.document_loaders import PyPDFLoader, TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
@@ -51,11 +53,16 @@ class RAGPipeline:
         documents = loader.load()
         chunks = self.text_splitter.split_documents(documents)
         
-        # Initialize in-memory Chroma db
-        # Note: In a production app you might want to persist the DB
+        # Use an ephemeral (in-memory) client with a unique collection name
+        # per session to ensure complete isolation between users
+        ephemeral_client = chromadb.EphemeralClient()
+        collection_name = f"session_{uuid.uuid4().hex[:16]}"
+        
         self.vectorstore = Chroma.from_documents(
             documents=chunks,
-            embedding=self.embeddings
+            embedding=self.embeddings,
+            client=ephemeral_client,
+            collection_name=collection_name
         )
         
         # Create retriever
