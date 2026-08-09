@@ -13,7 +13,11 @@ with st.sidebar:
     st.header("Configuration")
     
     # Try to load API key from Streamlit secrets first, fall back to manual input
-    secret_key = st.secrets.get("GEMINI_API_KEY", "")
+    try:
+        secret_key = st.secrets.get("GEMINI_API_KEY", "")
+    except Exception:
+        secret_key = ""
+    
     if secret_key:
         api_key = secret_key
         st.success("✅ API Key loaded from secrets")
