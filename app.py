@@ -11,7 +11,14 @@ st.markdown("Upload a document and ask questions about its content!")
 # Sidebar for configuration and upload
 with st.sidebar:
     st.header("Configuration")
-    api_key = st.text_input("Gemini API Key", type="password", help="Get your API key from Google AI Studio")
+    
+    # Try to load API key from Streamlit secrets first, fall back to manual input
+    secret_key = st.secrets.get("GEMINI_API_KEY", "")
+    if secret_key:
+        api_key = secret_key
+        st.success("✅ API Key loaded from secrets")
+    else:
+        api_key = st.text_input("Gemini API Key", type="password", help="Get your API key from Google AI Studio, or configure it in Streamlit secrets")
     
     st.header("Document Upload")
     uploaded_file = st.file_uploader("Upload a PDF or TXT file", type=["pdf", "txt"])
